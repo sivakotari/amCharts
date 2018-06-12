@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="https://www.amcharts.com/lib/3/pie.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<style>
+		#chartDiv {
+		  width: 400px;
+		  height: 300px;
+		}
+	</style>
+</head>
+<body>
+<div id="chartDiv"></div>
+<script type="text/javascript">
+giveMeAPI("http://api_stage.dataweave.co/v6/app_stage/insights/products_tracking_health_status/?api_key=8034178a60ee3eb70d8d5ab27a561485&dimension=health");
+function giveMeAPI(api){
+	$.getJSON(api,function(json){
+		var data = [];
+		var col = ['#00bad8','#ff615c','#cc8dc7','#ddeee4','#806870','#9472a3','#d4b788','#6d6d71','#52a3e1','#a9b1b8','#dc302c','#f2dc27','#f5bb94','#ff0088'];
+		var cnt = 0;
+		for(let i in json.data){
+			var d = {};
+			d.val = json.data[i];
+			d.title = i.toUpperCase().slice(0,1) + i.toLowerCase().slice(1);
+			d.color = col[cnt];
+			data.push(d);
+			cnt +=1;
+		}
+		// console.log(data);
+		onComplete(data);
+	});
+}
+function onComplete(data){
+	var chart = AmCharts.makeChart("chartDiv",{
+		"type" : "pie",
+		// "pieX" : 0,
+		"dataProvider" : data,
+		"valueField" : "val",
+		"colorField": "color",
+		"gradientRatio" :  [0.4, 0],
+		"labelsEnabled": false,
+		"pullOutRadius" : 0,
+		"balloonText" : '',
+		"titleField": "title",
+  		"legend": {
+  			// "equalWidths": true,
+  			// "autoMargins": true,
+	        // "horizontalGap": 10,
+	        // "labelWidth": 10,
+	        // "spacing": 50,
+	        // "valueWidth": 10,
+	        "align": "center",
+	        "valueAlign": "left",
+	        "markerType": "circle",
+	        "markerSize": 10,
+	        "valueWidth": 1,
+	        "maxColumns": 3,
+    	},
+    	"startDuration" : 0,
+	});
+}
+</script>
+</body>
+</html>

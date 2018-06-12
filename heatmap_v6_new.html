@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<style type="text/css">
+	    .chartdiv {
+	      width: 400px;
+	      height: 300px;
+	      float: left;
+	      margin-right: 20px;
+	    }
+	    .amcharts-chart-div a{
+	    	font-size: xx-small!important;;
+			/*display: none !important;*/
+		}
+	</style>
+</head>
+<body>
+	<div id="maindiv"></div>
+<script type="text/javascript">
+	giveMeAPI("http://api_stage.dataweave.co/v6/app_stage/assortment/delta_view/?api_key=8034178a60ee3eb70d8d5ab27a561485&title={%22brand%22:%22dettol%22}&filter_by={%22product_category%22:[%22discontinued%22,%22stocked_out%22]}&is_absolute=1");
+	function giveMeAPI(api){
+		$.getJSON(api,function(json){
+			var top_sources = json.sources;
+			var d ={};
+			d.data = {};
+			u_val = new Set();
+			var v_val = [];
+			for(var i in json.data){
+				if(!d.data.hasOwnProperty(json.data[i].product_category)){
+					d.data[json.data[i].product_category] = {};
+				}
+				if (!d.data[json.data[i].product_category].hasOwnProperty(json.data[i].source)) {
+					d.data[json.data[i].product_category][json.data[i].source] = {};
+				}
+				var startDate = fun(json.data[i].start_date);
+				var endDate = fun(json.data[i].end_date);
+				function fun(d){
+					var date = /(\d{4})-(\d{2})-(\d{2})/.exec(d);
+					var result = date[1]+'/'+date[2]+'/'+date[3];
+					return result;
+				}
+				if (!d.data[json.data[i].product_category][json.data[i].source].hasOwnProperty(startDate+' - '+endDate)) {console.log(startDate+' - '+endDate);
+					d.data[json.data[i].product_category][json.data[i].source][startDate+' - '+endDate] = json.data[i].field_value;
+				}
+				if(!d.hasOwnProperty(json.data[i].product_category+"_uniqueValues")){
+					d[json.data[i].product_category+"_uniqueValues"] = [];
+					v_val[json.data[i].product_category] = new Set();
+				}
+				d[json.data[i].product_category+"_uniqueValues"] = (Array.from(v_val[json.data[i].product_category].add(json.data[i].field_value))).sort(function(a,b){return b-a});
+			}
+			console.log(d);
+
+			var feed = {};
+			feed.data = {};
+			var d_range = new Set();
+			var uni_val = new Set();
+			for(var i in d.data){
+				var colors = genClrs("#dc302c",d[i+'_uniqueValues'].length);
+				// console.log(colors);
+				var arr = [];
+				for(var src in d.data[i]){
+					var obj = {};
+					obj.source = src;
+					obj.height = 1;
+					for(var date in d.data[i][src]){
+						obj[date+'_Val'] = d.data[i][src][date];
+						feed.date_range = Array.from(d_range.add(date));
+						for(var z=0;z<d[i+'_uniqueValues'].length;z++){
+							if (d[i+'_uniqueValues'][z] == d.data[i][src][date]) {
+								obj[date+'_Col'] = colors[z];
+							}
+						}
+						if(!obj.hasOwnProperty(date+'_Val')){
+							obj[date+'_Val'] = d.data[i][src][date];
+							obj[date+'_Col'] = "#aaa";
+						}
+					}
+					arr.push(obj);
+				}
+				feed.data[i] = arr;
+			}
+			console.log(feed);
+			onComplete(feed);
+		});
+	}
+
+	function onComplete(feed){
+		for(var i in feed.data){
+			var curntDiv = document.createElement("div");
+			curntDiv.id = "div_"+i;
+			curntDiv.className = "chartdiv";
+			curntDiv.style.margin = "0 0 5% 0";
+			document.getElementById("maindiv").appendChild(curntDiv);
+			var chart = AmCharts.makeChart(curntDiv,{
+				"type": "serial",
+				"dataProvider": feed.data[i],
+				"categoryField": "source",
+				"columnWidth": 1,
+				"titles": [{
+				    "text": i.toUpperCase().slice(0,1) + i.toLowerCase().slice(1)
+				}],
+				"graphs": loop("graphs",feed.data[i],feed),
+				"valueAxes": [{
+					"guides": loop("guides",feed.data[i],feed),
+					"labelsEnabled": false,
+					"stackType": "regular",
+					"axisAlpha": 0,
+					"gridAlpha": 0,
+				}],
+				"categoryAxis":{
+			        "tickLength" : 0,
+			        "axisAlpha": 0,
+			        "gridAlpha": 0,
+			        "labelRotation": 35
+	     		},
+	     		"balloon": {
+		          	"borderThickness": 0.5,
+		          	"fillAlpha": 1,
+		      	}
+			});
+		}
+	}
+
+	function loop(val,feedX,feed){
+        var graphsArray = [],guidesArray = [];
+       	var height = parseInt(feedX[0].height)/2;
+        for(var i in feed.date_range){
+	        var value = feed.date_range[i]+'_Val';
+	        graphsArray.push({
+	            "valueField" : "height",
+	            "type": "column",
+	            "fillAlphas": 1,
+	            "lineAlpha": 0,
+	            "fillColorsField": feed.date_range[i]+'_Col',
+	            "labelText":  "[["+value+"]]",
+	            "balloonText" : "[["+value+"]]"
+	        });
+	        guidesArray.push({
+                "value" : height,
+                "label": feed.date_range[i]
+            });
+            height += parseInt(feedX[0].height);
+        }
+	    if (val == "graphs")
+	     return graphsArray;
+        else if(val == "guides")
+         return guidesArray;
+    }
+
+	function genClrs(col,nos)
+	{
+		var rgb = hexToRgb(col);
+		var hex = [];
+		hex[0] = col;
+		var r = rgb["r"]%256;
+		var g = rgb["g"]%256;
+		var b = rgb["b"]%256;
+		var x1 = parseInt((255-rgb["r"])/nos);
+		var x2 = parseInt((255-rgb["g"])/nos);
+		var x3 = parseInt((255-rgb["b"])/nos);
+		 
+		var x = parseInt(255/nos);
+		for(var i=0;i<nos-1;i++)
+		{
+			r+=x1;
+			g+=x2;
+			b+=x3;
+			hex.push(rgbToHex(r,g,b));
+		}
+		return hex;
+
+		function hexToRgb(hex) {
+		    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+		    // console.log(result);
+		    return result ? {
+		        r: parseInt(result[1], 16),
+		        g: parseInt(result[2], 16),
+		        b: parseInt(result[3], 16)
+		    } : null;
+		}
+		function rgbToHex(r, g, b) {
+		    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+		    function componentToHex(c) {
+			    var hex = c.toString(16);
+			    return hex.length == 1 ? "0" + hex : hex;
+			}
+		}
+	}
+</script>
+</body>
+</html>

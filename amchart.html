@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>amchart</title>
+	<script src="amcharts_3.20.19.free/amcharts/amcharts.js"></script>
+	<script src="amcharts_3.20.19.free/amcharts/serial.js"></script>
+	<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+	<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+	<script src="jquery-3.1.1.min.js"></script>
+	<style type="text/css">
+		.amChartsLegend{
+			top: 5px !important;
+		}
+		.amcharts-export-menu{
+			right: -2.5em !important;
+		}
+	</style>
+</head>
+<body>
+	<div id="div" style="height: 450px; width: 1000px;"></div>
+	<script type="text/javascript">
+		var data = [
+		{
+	    "country": "USA",
+	    "visits": 1252,
+	    "volume" : 2110,
+	    "source" : 3134,
+	    "comp" : 4321,
+	    "x" : 3241,
+	    "y" : 2134,
+	    "z" : 1234,
+	    "A" : 4325,
+	    "B" : 2231,
+	    "C" : 1231,
+	    "D" : 2131,
+	    "E" : 1231,
+	    "F" : 6231
+	  }, {
+	    "country": "China",
+	    "visits": 1882,
+	    "volume" : 2420,
+	    "source" : 1134,
+	    "comp" : 2331,
+	    "x" : 1291,
+	    "y" : 3184,
+	    "z" : 2334,
+	    "A" : 1231,
+	    "B" : 3231,
+	    "C" : 6231,
+	    "D" : 8131,
+	    "E" : 1431,
+	    "F" : 6131
+	  }, {
+	    "country": "Japan",
+	    "visits": 1809,
+	    "volume" : 3115,
+	    "source" : 3134,
+	    "comp" : 3321,
+	    "x" : 2241,
+	    "y" : 1134,
+	    "z" : 4234,
+	    "A" : 1231,
+	    "B" : 7231,
+	    "C" : 4231,
+	    "D" : 8131,
+	    "E" : 9231,
+	    "F" : 2231
+	  }, {
+	    "country": "Germany",
+	    "visits": 1322,
+	    "volume" : 2219,
+	    "source" : 1134,
+	    "comp" : 5321,
+	    "x" : 3241,
+	    "y" : 1134,
+	    "z" : 4234,
+	    "A" : 5231,
+	    "B" : 4521,
+	    "C" : 7632,
+	    "D" : 5374,
+	    "E" : 3214,
+	    "F" : 3451
+	  }, {
+	    "country": "UK",
+	    "visits": 1122,
+	    "volume" : 3445,
+	    "source" : 5134,
+	    "comp" : 3321,
+	    "x" : 1241,
+	    "y" : 5134,
+	    "z" : 2234,
+	    "A" : 1231,
+	    "B" : 5342,
+	    "C" : 2343,
+	    "D" : 1111,
+	    "E" : 2222,
+	    "F" : 3333
+	  }, {
+	    "country": "Netherlands",
+	    "visits": 665,
+	    "volume" : 2424,
+	    "source" : 2134,
+	    "comp" : 3321,
+	    "x" : 1241,
+	    "y" : 3134,
+	    "z" : 2234,
+	    "A" : 1231,
+	    "B" : 4534,
+	    "C" : 3333,
+	    "D" : 2314,
+	    "E" : 6547,
+	    "F" : 7644
+	  }
+	  // , {
+	  //   "country": "Russia",
+	  //   "visits": 1580,
+	  //   "volume" : 3351,
+	  //   "source" : 1134,
+	  //   "comp" : 2321,
+	  //   "x" : 4241,
+	  //   "y" : 3134,
+	  //   "z" : 4234,
+	  //   "A" : 2231,
+	  //   "B" : 7641,
+	  //   "C" : 2341,
+	  //   "D" : 4321,
+	  //   "E" : 2231,
+	  //   "F" : 3451
+	  // }, {
+	  //   "country": "South Korea",
+	  //   "visits": 443,
+	  //   "volume" : 3521,
+	  //   "source" : 5164,
+	  //   "comp" : 3331,
+	  //   "x" : 5291,
+	  //   "y" : 1194,
+	  //   "z" : 4624,
+	  //   "A" : 3411,
+	  //   "B" : 4234,
+	  //   "C" : 3411,
+	  //   "D" : 5342,
+	  //   "E" : 3445,
+	  //   "F" : 4567
+	  // }
+	];
+
+	// var data,data1,data2;
+	// $.getJSON("http://localhost/priceweave_v3/products/getChartData/?&source_urlh=8343c9b6a5ccf4a15383459f7986b98dc1a7b39d&seedsource_urlh=a63a3abbe5e394ddd4a534e461b6785945d625f7&source=Flipkart",function(json){
+		
+	// 	data = json;
+
+		var categoryName = Object.keys(data[0]);//publishing category names
+
+		AmCharts.makeChart("div",{
+		"type" : "serial",
+		"dataProvider" : data,
+		"categoryField" : "country",
+
+		"graphs" : [{
+			// "type" : "column",
+
+			"valueField" : "visits",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 0.5,
+			"lineThickness": 1,
+        	 "lineColor": "#0077ff",
+        	"balloonText": "",
+        	"title" : categoryName[1]
+
+		},
+		{
+			"valueField" : "volume",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 1,
+			"lineThickness": 1,
+        	"lineColor": "#189",
+        	"balloonText": "",
+        	"title" : categoryName[2]
+		},
+		{
+			"valueField" : "source",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 1,
+			"lineThickness": 1,
+        	"lineColor": "#319",
+        	"balloonText": "",
+        	"title" : categoryName[3]
+		},
+		{
+			"valueField" : "comp",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 1,
+			"lineThickness": 1,
+        	"lineColor": "#f19",
+        	"balloonText": "<div style='text-align : left; font-size: 1.2em;'>categoryName[0]</span><hr>categoryName[1]:[[visits]]</br>categoryName[2]:[[volume]]</br>categoryName[3]:[[source]]</br>categoryName[4]:[[comp]]</br>categoryName[5]:[[x]]</br>categoryName[7]:[[y]]</br>categoryName[8]:[[z]]</br>categoryName[9]:[[A]]</br>categoryName[10]:[[B]]</br>categoryName[11]:[[C]]</br>categoryName[12]:[[D]]</br>categoryName[13]:[[E]]</br>categoryName[14]:[[F]]</div>",
+        	"title" : categoryName[4]
+		},
+		{
+			"valueField" : "x",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 1,
+			"lineThickness": 1,
+        	"lineColor": "#711",
+        	"balloonText": "",
+        	"title" : categoryName[5]
+		},
+		{
+			"valueField" : "y",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 1,
+			"lineThickness": 1,
+        	"lineColor": "#98f",
+        	"balloonText": "",
+        	"title" : categoryName[6]
+		},
+		{
+			"valueField" : "z",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 1,
+			"lineThickness": 1,
+        	"lineColor": "#316",
+        	"balloonText": "",
+        	"title" : categoryName[7]
+		},
+		{
+			"valueField" : "A",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 1,
+			"lineThickness": 1,
+        	"lineColor": "#094",
+        	"balloonText": "",
+        	"title" : categoryName[8]
+		},
+		{
+			"valueField" : "B",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 1,
+			"lineThickness": 1,
+        	"lineColor": "#657",
+        	"balloonText": "",
+        	"title" : categoryName[9]
+		},
+		{
+			"valueField" : "C",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 1,
+			"lineThickness": 1,
+        	"lineColor": "#3f7",
+        	"balloonText": "",
+        	"title" : categoryName[10]
+		},
+		{
+			"valueField" : "D",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 1,
+			"lineThickness": 1,
+        	"lineColor": "#f61",
+        	"balloonText": "",
+        	"title" : categoryName[11]
+		},
+		{
+			"valueField" : "E",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 1,
+			"lineThickness": 1,
+        	"lineColor": "#076",
+        	"balloonText": "",
+        	"title" : categoryName[12]
+		},
+		{
+			"valueField" : "F",
+			// "fillAlphas": 0.1,
+			"bullet" : "round",
+			// "bulletBorderAlpha": 1,
+			"lineThickness": 1,
+        	"lineColor": "#927",
+        	"balloonText": "",
+        	"title" : categoryName[13]
+		}],
+		"categoryAxis": {
+   			 // "gridPosition": "start",
+   			 "axisAlpha": 0
+ 		 },
+		"chartCursor": {  //mouse pointer for tool tip
+			// "fullWidth": true,
+			// "cursorAlpha": 0.05,
+			// "valueLineEnabled":true,
+			"valueLineBalloonEnabled":true,
+        	// "cursorPosition": "mouse",
+        	"cursorAlpha": 0.3,
+        	
+   		 },
+   		 "balloon": {
+		    "cornerRadius": 3,
+		    // "horizontalPadding": 10,
+		    "borderThickness": 1,
+		    "adjustBorderColor" : true,
+		    "borderColor" : "#ccc",
+		    "color" : "#777",
+		    "fillColor": "#fff",
+		    "fillAlpha": 0.9,
+		    "shadowAlpha" : 0,
+		    "verticalPadding": 10
+    		// "offsetX": 50,
+    		// "offsetY": 8
+  		},
+  		"legend": {
+        // "equalWidths": false,
+        // "periodValueText": "[[value]]",
+        "position": "right",
+        "valueAlign": "left",
+        "markerSize": 10,
+    	// "useGraphSettings": true,
+        "valueWidth": 1,
+
+    	},
+    	"export": {
+    		"enabled": true
+  		}
+   		// "chartScrollbar":{} // top scrollbar
+
+	});
+
+	</script>
+</body>
+</html>

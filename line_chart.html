@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="amcharts_3.20.19.free/amcharts/amcharts.js"></script>
+	<script src="amcharts_3.20.19.free/amcharts/serial.js"></script>
+	<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+	<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+	<script src="jquery-3.1.1.min.js"></script>
+	<style type="text/css">
+		.amChartsLegend{
+			top: 5px !important;
+		}
+		.amcharts-chart-div a{
+			display: none !important;
+		}
+		.amcharts-export-menu{
+			right: -2.5em !important;
+		}
+	</style>
+</head>
+<body>
+	<div id="div" style="height: 450px; width: 1100px;"></div>
+	<script type="text/javascript">
+		var data = [
+			{
+				"date" : "18-12-2016",
+				"Amazon" : 0,
+				"Flipkart" : 0,
+				"Jabong" : 0,
+				"Paytm" : 0,
+				"SnapDeal" : 0
+			},
+			{
+				"date" : "19-12-2016",
+				"Amazon" : -2.2505160122968,
+				"Flipkart" : 0.2678657224144,
+				"Jabong" : 0,
+				"Paytm" : -4.753264163062,
+				"SnapDeal" : -3.1252161630527
+			},{
+				"date" : "20-12-2016",
+				"Amazon" : -4.281408319733,
+				"Flipkart" : -2.3470361460474,
+				"Jabong" : 0,
+				"Paytm" : 1.321961920223,
+				"SnapDeal" : 0.10509333444975
+			},{
+				"date" : "21-12-2016",
+				"Amazon" : 5.0521449921429,
+				"Flipkart" : -1.6279295849717,
+				"Jabong" : 0,
+				"Paytm" : -0.72717856041446,
+				"SnapDeal" : 0.15042094736172
+			},{
+				"date" : "22-12-2016",
+				"Amazon" : -1.045712432132,
+				"Flipkart" : -3.1657011050117,
+				"Jabong" : -5.5679287305123,
+				"Paytm" : -4.8553612862681,
+				"SnapDeal" : -1.7609708651907
+			},{
+				"date" : "23-12-2016",
+				"Amazon" : -4.1264891323731,
+				"Flipkart" : 4.9437226412787,
+				"Jabong" : 5.8962264150943,
+				"Paytm" : 4.6188966491789,
+				"SnapDeal" : 2.7490070118207
+			},{
+				"date" : "24-12-2016",
+				"Amazon" : -0.21100126139348,
+				"Flipkart" : 1.3589092145481,
+				"Jabong" : 0,
+				"Paytm" : 3.5207570079377,
+				"SnapDeal" : -0.68555405349598
+			},{
+				"date" : "25-12-2016",
+				"Amazon" : 3.4266410117906,
+				"Flipkart" : 0.23941015685279,
+				"Jabong" : 0,
+				"Paytm" : -0.6993280843978,
+				"SnapDeal" : -0.45687729677041
+			},{
+				"date" : "26-12-2016",
+				"Amazon" : -6.9014458953353,
+				"Flipkart" : -1.9122872482374,
+				"Jabong" : 0,
+				"Paytm" : -2.789833237066,
+				"SnapDeal" : -1.2450855112822
+			},{
+				"date" : "27-12-2016",
+				"Amazon" : 4.8643222949569,
+				"Flipkart" : 0.74660773720686,
+				"Jabong" : -4.4543429844098,
+				"Paytm" : 2.4096776700582,
+				"SnapDeal" : -1.3978971180421
+			},{
+				"date" : "28-12-2016",
+				"Amazon" : -4.7165020945652,
+				"Flipkart" : 3.6035471969138,
+				"Jabong" : 4.6620046620047,
+				"Paytm" : -0.13116730057026,
+				"SnapDeal" : 3.0386708894201
+			},{			
+				"date" : "29-12-2016",
+				"Amazon" : 3.4164647510303,
+				"Flipkart" : -0.17144339329962,
+				"Jabong" : 0,
+				"Paytm" : 0.86165790770847,
+				"SnapDeal" : 0-2.6334242022432
+			},{
+				"date" : "30-12-2016",
+				"Amazon" : -1.2978614739784,
+				"Flipkart" : -6.5752532085174,
+				"Jabong" : 0,
+				"Paytm" : 4.273089947741,
+				"SnapDeal" : -2.0313129014755
+			},{
+				"date" : "31-12-2016",
+				"Amazon" : -1.2271157759976,
+				"Flipkart" : 4.3508366963961,
+				"Jabong" : 0,
+				"Paytm" : -0.32853835675664,
+				"SnapDeal" : -1.5309709542357
+			},{
+				"date" : "01-01-2017",
+				"Amazon" : 1.1254517892758,
+				"Flipkart" : 5.6752556022895,
+				"Jabong" : 55.679287305122,
+				"Paytm" : 0.44727618318498,
+				"SnapDeal" : 0.96622205805052
+			},{
+				"date" : "02-01-2017",
+				"Amazon" : 7.0114915664313,
+				"Flipkart" : 0.42996666363082,
+				"Jabong" : 0,
+				"Paytm" : -6.5621777728759,
+				"SnapDeal" : 2.3077239305134
+			},{
+				"date" : "03-01-2017",
+				"Amazon" : -0.99016885243176,
+				"Flipkart" : -2.5096859615571,
+				"Jabong" : 0,
+				"Paytm" : 0.29319942810387,
+				"SnapDeal" : 7.9348894021435
+			},{
+				"date" : "04-01-2017",
+				"Amazon" : -1.7357828821734,
+				"Flipkart" : 1.7031687939927,
+				"Jabong" : 0,
+				"Paytm" : -0.72545914467915,
+				"SnapDeal" : -2.1170734212446
+			},{
+				"date" : "05-01-2017",
+				"Amazon" : -0.67406155064834,
+				"Flipkart" : 0.12684177746894,
+				"Jabong" : -14.306151645207,
+				"Paytm" : -4.5911362992886,
+				"SnapDeal" : -1.3589229859463
+			},{
+				"date" : "06-01-2017",
+				"Amazon" : -7.3965204844993,
+				"Flipkart" : -3.866448590624,
+				"Jabong" : 16.69449081803,
+				"Paytm" : -8.5292857851441,
+				"SnapDeal" : -3.7706388536986
+			},{
+				"date" : "07-01-2017",
+				"Amazon" : 4.2718263189681,
+				"Flipkart" : -7.3643626382555,
+				"Jabong" : -14.306151645207,
+				"Paytm" : -6.5794005159726,
+				"SnapDeal" : -2.4037705042848
+			},{
+				"date" : "08-01-2017",
+				"Amazon" : 1.7998529275544,
+				"Flipkart" : 10.16246083947,
+				"Jabong" : 0,
+				"Paytm" : 14.699975951686,
+				"SnapDeal" : 4.7044365591928
+			},{
+				"date" : "09-01-2017",
+				"Amazon" : 4.9848252808992,
+				"Flipkart" : -0.76013770980874,
+				"Jabong" : 0,
+				"Paytm" : -9.6381752405466,
+				"SnapDeal" : 1.5266572439437
+			},{
+				"date" : "10-01-2017",
+				"Amazon" : -9.7873567570687,
+				"Flipkart" : -4.1278998931235,
+				"Jabong" : -33.38898163606,
+				"Paytm" : 3.0089563474623,
+				"SnapDeal" : -3.274883521318
+			},{
+				"date" : "11-01-2017",
+				"Amazon" : 0.12758376156185,
+				"Flipkart" : 1.400616073589,
+				"Jabong" : 12.531328320802,
+				"Paytm" : 0.026624519176076,
+				"SnapDeal" : -3.3317553133441
+			},{
+				"date" : "12-01-2017",
+				"Amazon" : -5.041905290187,
+				"Flipkart" : -1.4086855500709,
+				"Jabong" : 0,
+				"Paytm" : -13.575265362054,
+				"SnapDeal" : 7.2345744280398
+			},{
+				"date" : "13-01-2017",
+				"Amazon" : -1.834549333804,
+				"Flipkart" : 5.7373046063441,
+				"Jabong" : 0,
+				"Paytm" : 21.079976851209,
+				"SnapDeal" : -7.029660220654
+			},{
+				"date" : "14-01-2017",
+				"Amazon" : 12.277750532409,
+				"Flipkart" : -0.74057233376245,
+				"Jabong" : 0,
+				"Paytm" : 0.44931399636403,
+				"SnapDeal" : -8.7778107229434
+			},{
+				"date" : "15-01-2017",
+				"Amazon" : -2.6098657641836,
+				"Flipkart" : -3.767740150997,
+				"Jabong" : 0,
+				"Paytm" : -3.9186588789609,
+				"SnapDeal" : 0.64619848454009
+			},{
+				"date" : "16-01-2017",
+				"Amazon" : -5.6990625466849,
+				"Flipkart" : 2.2965273484955,
+				"Jabong" : 0,
+				"Paytm" : 0.72118204273182,
+				"SnapDeal" : -7.071518943201
+			},{
+				"date" : "17-01-2017",
+				"Amazon" : -2.4021248895651,
+				"Flipkart" : -1.4011373070752,
+				"Jabong" : 0,
+				"Paytm" : 3.0003291478203,
+				"SnapDeal" : 0.66647214575563
+			}
+		];
+		var sources = Object.keys(data[0]);
+		// var col1 = '#4db0ec',col2,col3,col4,col5;
+		AmCharts.makeChart("div",{
+			"type" : "serial",
+			"dataProvider" : data,
+			"categoryField" : "date",
+			"dataDateFormat" : "DD-MM-YYYY",
+
+			"graphs" : [{
+				"valueField" : sources[1],
+				"bullet" : "round",
+				"lineThickness": 1,
+	        	"lineColor": "#4db0ec",
+	        	"balloonText": "<div style='text-align : left; font-size: 1.2em;padding: 0 0.3em'><span style='color:#000;'>DATE: [[date]]</span><hr><span style='color:#4db0ec;'>Amazon: [[Amazon]]</span></br><span style='color:#f08278;'>Flipkart: [[Flipkart]]</span></br><span style='color:#68c68f;'>Jabong: [[Jabong]]</span></br><span style='color:#eea565;'>Paytm: [[Paytm]]</span></br><span style='color:#6ba6ce;'>SnaDdeal: [[SnapDeal]]</span></div>",
+	        	"title" : sources[1]
+			},
+			{
+				"valueField" : sources[2],
+				"bullet" : "round",
+				"lineThickness": 1,
+	        	"lineColor": "#f08278",
+	        	"balloonText": "",
+	        	"title" : sources[2]
+			},
+			{
+				"valueField" : sources[3],
+				"bullet" : "round",
+				"lineThickness": 1,
+	        	"lineColor": "#68c68f",
+	        	"balloonText": "",
+	        	"title" : sources[3]
+			},
+			{
+				"valueField" : sources[4],
+				"bullet" : "round",
+				"lineThickness": 1,
+	        	"lineColor": "#eea565",
+	        	"balloonText": "",
+	        	"title" : sources[4]
+			},
+			{
+				"valueField" : sources[5],
+				"bullet" : "round",
+				"lineThickness": 1,
+	        	"lineColor": "#6ba6ce",
+	        	"balloonText": "",
+	        	"title" : sources[5]
+			}],
+			"categoryAxis": {
+   			 // "gridPosition": "start",
+   			 "parseDates": true,
+   			 "equalSpacing": true,
+   			 "axisAlpha": 0
+	 		 },
+			"chartCursor": {  //mouse pointer for tool tip
+				// "fullWidth": true,
+				// "cursorAlpha": 0.05,
+				// "valueLineEnabled":true,
+				// "valueLineBalloonEnabled":true,
+	        	"cursorAlpha": 0.3,	        	
+	   		 },
+	   		 "balloon": {
+			    "cornerRadius": 3,
+			    "borderThickness": 1,
+			    "adjustBorderColor" : true,
+			    // "borderColor" : "#ccc",
+			    // "color" : "#777",
+			    "fillColor": "#fff",
+			    "fillAlpha": 0.9,
+			    "shadowAlpha" : 0.1,
+			    "verticalPadding": 10
+	  		},
+	  		"legend": {
+		        "position": "right",
+		        "valueAlign": "left",
+		        "markerSize": 10,
+		        "valueWidth": 1
+	    	},
+	    	"export": {
+	    		"enabled": true
+	  		}
+		});
+	</script>
+
+</body>
+</html>

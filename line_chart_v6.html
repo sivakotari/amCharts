@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+	<script src="jquery-3.1.1.min.js"></script>
+	<style type="text/css">
+	@font-face {
+	  font-family: 'Montserrat';
+	  font-style: normal;
+	  font-weight: 400;
+	  src: url(https://fonts.gstatic.com/s/montserrat/v9/zhcz-_WihjSQC0oHJ9TCYPk_vArhqVIZ0nv9q090hN8.woff2) format('woff2');
+	}
+	#myDiv{
+		font-family: Montserrat;
+	}
+	</style>
+</head>
+<body>
+	<div id="myDiv" style="height: 350px; width: 1100px;"></div>
+
+	<script type="text/javascript">		
+	$.getJSON("http://localhost/priceweave_v3/insights/getChartData/price_basket",function(json){
+		var dates = [];
+		for(i=0;i<json.length;i++){
+			dates.push(json[i].label);			
+		}
+
+		function removeDuplicates(num) {
+			var x,out=[],obj={};
+			for (x=0; x<num.length; x++) {
+			  	obj[num[x]]=0;
+			}
+			for (x in obj) {
+			   out.push(x);
+			}
+			return out;
+		}
+		uniquedate = removeDuplicates(dates);
+		var maindata = [];
+		for(i=0;i<uniquedate.length;i++){
+			mainobj = {};
+			for(j=0;j<json.length;j++){
+				if(uniquedate[i] == json[j].label){
+					mainobj.date = json[j].label;
+					mainobj[json[j].category] = json[j].count;
+					mainobj[json[j].category+"Tip"] = json[j].value;
+					mainobj[json[j].category+"Bullet"] = "round";
+					mainobj[json[j].category+"DashLength"] = 0;
+
+				}
+			}
+			maindata.push(mainobj);
+		}
+		console.log(maindata);
+		var sources = Object.keys(maindata[0]);
+		var colors = ["#4db0ec","#f08278","#68c68f","#eea565","#6ba6ce"];
+
+
+		//removing zero values and handling edge cases
+		for(i=0,j=1;i<sources.length-7;i++){
+			while (remove(sources[j], maindata, chart)) {}
+			j += 4;
+			// console.log(sources[i+1]);
+		}		
+		function remove(src, arrdata, dash) {
+			for (var i in arrdata) {
+				console.log(arrdata.length);
+			    if (arrdata[i][src] == 0) {
+			    	arrdata[i][src] = null;
+
+			    	if(i == 0) {
+			    		arrdata[i][src+'Bullet'] = '';
+			    		for(var j=i; j < arrdata.length-1; j++){ 
+			    			if (!(arrdata[parseInt(j)+1][src] == 0)) {
+							    arrdata[i][src] = arrdata[parseInt(j)+1][src];
+							    arrdata[i][src+'DashLength'] = 5;
+							    break;
+							    
+						    }
+				    	}
+			      	}
+			      	else if( i == arrdata.length-1) {
+			      		arrdata[i][src+'bullet'] = '';
+			      		for(var j=i; j>=0; j--){
+			      			if (!(arrdata[parseInt(j)-1][src] == null)) {
+							    arrdata[i][src] = arrdata[parseInt(j)-1][src];
+							    arrdata[parseInt(j)-1][src+'DashLength'] = 5;
+							    break;							    
+						    }
+			      		}
+			      	}
+			      	else{
+			      		arrdata[parseInt(i)-1][src+'DashLength'] = 5;
+			      	}
+			    }
+			}
+		}
+		var chart = AmCharts.makeChart("myDiv",{
+			"type" : "serial",
+			"creditsPosition": "bottom-right",
+			"dataProvider" : maindata,
+			"categoryField" : "date",
+			"dataDateFormat" : "DD-MM-YYYY",
+			"graphs" : [{
+				"valueField" : sources[1],			
+				"bulletBorderAlpha": 1,
+				"bulletColor": "#FFFFFF",
+				"useLineColorForBulletBorder": true,
+				"bulletField" : sources[3],
+	        	"dashLengthField": sources[4],
+				"lineThickness": 1,
+	        	"lineColor": colors[0],
+	        	"balloonFunction": balloon,
+	        	"title" : sources[1],	        	
+			},
+			{
+				"valueField" : sources[5],
+				"bulletBorderAlpha": 1,
+				"bulletColor": "#FFFFFF",
+				"useLineColorForBulletBorder": true,
+				"bulletField" : sources[7],
+				"dashLengthField": sources[8],
+				"lineThickness": 1,
+	        	"lineColor": colors[1],
+	        	"balloonFunction": balloon,
+	        	"title" : sources[5]
+			},
+			{
+				"valueField" : sources[9],
+				"bulletBorderAlpha": 1,
+				"bulletColor": "#FFFFFF",
+				"useLineColorForBulletBorder": true,
+				"bulletField" : sources[11],
+				"dashLengthField": sources[12],
+				"lineThickness": 1,
+	        	"lineColor": colors[2],
+	        	"balloonFunction": balloon,
+	        	"title" : sources[9]
+			},
+			{
+				"valueField" : sources[13],
+				"bulletField" : sources[15],
+				"dashLengthField": sources[16],
+		        "bulletBorderAlpha": 1,
+		        "bulletColor": "#FFFFFF",
+		        "useLineColorForBulletBorder": true,
+				"lineThickness": 1,
+	        	"lineColor": colors[3],
+	        	"balloonFunction": balloon,
+	        	"title" : sources[13]
+			},
+			{
+				"valueField" : sources[17],
+				"bulletBorderAlpha": 1,
+				"bulletColor": "#FFFFFF",
+				"useLineColorForBulletBorder": true,
+				"bulletField" : sources[19],
+				"dashLengthField": sources[20],
+				"lineThickness": 1,
+	        	"lineColor": colors[4],
+	        	"balloonFunction": balloon,
+	        	"title" : sources[17]
+			}],
+			"valueAxes": [{
+		        "axisAlpha": 0,
+		        "gridAlpha": 1,
+		        "gridColor": "#D9D9D9",
+		    }],
+			"categoryAxis": {
+	   			 "parseDates": true,
+	   			 "equalSpacing": true,
+	   			 "axisAlpha": 0.3,
+	   			 "gridAlpha": 0,
+	   			 "boldLabels": true,
+	   			 "tickLength" : 0
+	 		 },
+			"chartCursor": {
+	        	"cursorAlpha": 1,
+	        	"categoryBalloonEnabled":false,
+	        	"cursorColor": "#f00",
+	        	"oneBalloonOnly":true
+	   		 },
+	   		 "balloon": {
+			    "cornerRadius": 3,
+			    "borderThickness": 0,
+			    "adjustBorderColor" : true,
+			    "fillColor": "#fff",
+			    "fillAlpha": 1,
+			    "shadowAlpha" : 0.2,
+			    "verticalPadding": 10,
+	  		},
+	  		"legend": {
+	  			"markerType": "circle",
+		        "position": "top",
+		        "valueAlign": "left",
+		        "markerSize": 10,
+		        "valueWidth": 0,
+		        // 	"useMarkerColorForLabels":true
+	    	},
+	    	"startDuration": 0.3
+		});
+		
+		function balloon(DataItem){
+			var g = chart.graphs;
+			var text = "<div style='text-align : left; font-size: 1.2em;padding: 0 0.3em'><span style='color:#000;'>DATE:"+DataItem.dataContext.date+"</span></br>";
+
+			for (var i = 0,j = 1; i < g.length; i++) {
+		        if (g[i].hidden) {			
+		            continue; 
+		            text = "";
+		        }
+		        //sourceTip val as tool tip
+		        // text += "<span style='color:"+colors[i]+";'>"+sources[j]+": "+Math.round(DataItem.dataContext[sources[parseInt(j)]+'Tip']*100)/100+"</span></br>";
+		        // console.log(DataItem);
+		        //'sources' and 'colors' are global variables..so, can accessed in chart.graph and balloon function also
+
+		        //source value as tool tip
+		        text += "<span style='color:"+colors[i]+";'>"+sources[j]+": "+DataItem.dataContext[sources[j]]+"</span></br>";
+		        j += 4;
+		    }
+		    // console.log(DataItem+"dataitem");
+		    text += "</div>";
+		    return text;
+		}
+
+		
+	});
+
+	</script>
+</body>
+</html>

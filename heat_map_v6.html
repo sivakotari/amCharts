@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+	<!-- <script src="jquery-3.1.1.min.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="chartdiv" style="height: 1000px; width: 350px; margin-left: 100px;"></div>
+<script type="text/javascript">
+	var maindata,top_sources;
+	var noSources = [];
+	dataFormatter("http://api_stage.dataweave.co/v6/app/retailer/bundle_history/?api_key=8034178a60ee3eb70d8d5ab27a561485&bundle_id=880&field=available_price&aggregate=0&filter_by={%22daterange%22:[20170208,20170310]}");
+
+	function dataFormatter(api){
+		getFive(onComplete);
+		function getFive(whenDone) {
+		    $.getJSON(api,function(json){
+		    	top_sources = json.top_sources;
+		    	function chkValSrc(chk){
+      				var x = 0;
+      				for(j=0;j<json.data.length;j++){
+      					if (chk == json.data[j].source) {
+      						x++;
+      					}
+      				}return x;
+      			}
+      			for (i=0;i<json.top_sources.length;i++){
+      				var z = chkValSrc(json.top_sources[i]);
+      				if (z <= 0) {
+      					noSources.push(json.top_sources[i]);
+      				}
+      			}
+				var final_top_sources = $(json.top_sources).not(noSources).get();
+
+      			var dates = dformatter();
+      			var values = valformatter();
+
+				var color = colorformatter();
+				// console.log(values);
+				// console.log(color);
+
+				function colorformatter(){
+					var i,shade = "#ff615c";
+					var col = [];
+					for (i = values.length; i > 0; i--) {
+						var NewColor = LightenDarkenColor(shade, 6);
+						// color[i] = NewColor;
+						col.push(NewColor);
+						shade = NewColor;
+					}return col;
+
+				    function LightenDarkenColor(col, amt) {
+				    	var usePound = false;
+				    	if (col[0] == "#") {
+				            col = col.slice(1);
+				            usePound = true;
+				    	}
+				    	var num = parseInt(col,16);
+				    	var r = (num >> 16) + amt;
+					    	if (r > 255) r = 255;
+					    	else if  (r < 0) r = 0;
+				    	var b = ((num >> 8) & 0x00FF) + amt;
+					    	if (b > 255) b = 255;
+					    	else if  (b < 0) b = 0;
+				    	var g = (num & 0x0000FF) + amt;
+					    	if (g > 255) g = 255;
+					    	else if (g < 0) g = 0;
+				    	return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+				    }
+			    }
+
+			    function add(){
+			    	for (var i in maindata){
+			    		for(j = 0; j<final_top_sources.length;j++){
+			    			if (!maindata[i].hasOwnProperty(final_top_sources[j])) {
+			    				maindata[i][final_top_sources[j]] = 0;
+			    			}
+			    		}
+			    	}
+			    }
+			    add();
+
+      			var mdata = [];
+      			var src = new Set();
+      			for(i=0;i<dates.length;i++){
+      				obj = {};
+      				for(j=0;j<json.data.length;j++){
+      					if(dates[i] == json.data[j].crawl_date){
+      						obj.crawl_date = json.data[j].crawl_date;
+      						obj[json.data[j].source+'Value'] = json.data[j].field_value;
+      						src.add(json.data[j].source+'Value');
+      						obj.height = 1;
+      						// called(obj);
+      						for(l = 0; l<final_top_sources.length;l++){
+      							if (!obj.hasOwnProperty(final_top_sources[l]+'Value')) {
+      								obj[final_top_sources[l]+'Value'] = 0;
+      								obj[final_top_sources[l]+'color'] = "#888";
+      							}
+      						}
+      						for(k=0;k<values.length;k++){
+  								if (values[k] == json.data[j].field_value) {
+  									obj[json.data[j].source+'color'] = color[k];
+  								}
+      						}
+      					}
+      				}
+      				mdata.push(obj);
+      			}
+      			// console.log(final_top_sources);
+      			var srcArr = Array.from(src);
+      			// var x = mdata.slice(7,21);// passing part of data(x) to whenDone function
+      			// console.log(x);
+				whenDone(mdata,dates,final_top_sources);
+
+
+      			function dformatter(){
+      				var date = [];
+      				for(i=0;i<json.data.length;i++){
+      					date.push(json.data[i].crawl_date);
+      				}
+      				var uniquedate = removeDuplicates(date);
+      				uniquedate.sort(function(a,b){
+      					a = a.split('-').join('');
+      				 	b = b.split('-').join('');
+      				  	return a-b;
+      				});
+      				return uniquedate;
+      			}
+      			function valformatter(){
+      				var Values = [];
+      				for(i=0;i<json.data.length;i++){
+      					Values.push(json.data[i].field_value);
+      				}
+      				var uniqueValues= removeDuplicates(Values);
+      				uniqueValues.sort(function(a,b){
+      					a = a.split('-').join('');
+      				 	b = b.split('-').join('');
+      				  	return a-b;
+      				});
+      				// console.log(uniqueValues);
+      				return uniqueValues;
+      			}
+      			function removeDuplicates(num) {
+  					var x,out=[],obj={};
+  					for (x=0; x<num.length; x++) {
+  					  	obj[num[x]]=0;
+  					}
+  					for (x in obj) {
+  					   out.push(x);
+  					}
+  					return out;
+      			}
+      		});
+		}
+	}
+
+	function onComplete(a,dates,final_top_sources) {
+	    maindata = a;
+	    // function balloon(DataItem){
+	    // 	var d = DataItem.dataContext;
+	    // 	var g = chart.graphs;
+	    // 	console.log();
+	    // 	for (var i = 0; i < g.length; i++) {
+	    // 		console.log("hi");
+	    //     	var s = final_top_sources[i]+"Value";
+	    //     	console.log(d.SnapDealValue);
+	    //     	// return DataItem.dataContext.SnapDealValue;
+	    // 	}
+	    // }
+
+		var chart = AmCharts.makeChart("chartdiv",{
+			"type": "serial",
+			"dataProvider": maindata,
+			"rotate": true,
+			"categoryField": "crawl_date",
+			"columnWidth": 1,
+			"graphs" : (function(){
+				var graphArray = [];
+				for(i=0;i<final_top_sources.length;i++){
+					var x = final_top_sources[i]+'Value';
+					graphArray.push({
+						"valueField" : "height",
+						"type": "column",
+						"fillAlphas": 1,
+						"lineAlpha": 0,
+						"fillColorsField": final_top_sources[i]+"color",
+						// "balloonFunction": balloon,
+						// "labelText":  x,
+						// "labelFunction": function(DataItem, x){
+						// 	var val = DataItem.dataContext[x];
+						// 	console.log(x);
+						// }
+						"balloonText": "",
+					});
+				}
+				return graphArray;
+			})(),
+			"columnWidth": 1,
+			"valueAxes": [{
+				// "tickLength" : 1,
+				"stackType": "regular",
+				"maximum": final_top_sources.length,//no.of sources* height
+				"axisAlpha": 0,
+				"gridAlpha": 0,
+				"labelsEnabled": false,
+			    "guides": (function(){
+			    	var graphArray = [];
+			    	var a = parseInt(maindata[0].height)/2;
+			    	for(i=0;i<final_top_sources.length;i++){
+			    		graphArray.push({
+			    			"value" : a,
+			    			"label": final_top_sources[i]
+			    		});
+			    		a += parseInt(maindata[0].height);
+			    	}
+			    	return graphArray;
+			    })(),
+			}],
+			"categoryAxis":{
+				"tickLength" : 0,
+				"axisAlpha": 0,
+				"gridAlpha": 0,
+				// "parseDates" : true,
+				// "widthField" : 0,
+			},
+			"balloon": {
+			    // "borderThickness": 3,
+			    // "horizontalPadding": 17,
+			    
+			    "fixedPosition": true,
+			    "offsetX": 50,
+			    "offsetY": 8
+			}
+
+
+		});
+	}
+</script>
+
+</body>
+</html>

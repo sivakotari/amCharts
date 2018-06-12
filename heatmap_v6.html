@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+  <!-- <script src="jquery-3.1.1.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <style type="text/css">
+    .chartdiv {
+      width: 400px;
+      height: 300px;
+      float: left;
+      margin-right: 20px;
+    }
+  </style>
+</head>
+<body>
+<div id="chartdiv1" class="chartdiv"></div>
+<div id="chartdiv2" class="chartdiv"></div>
+<div id="chartdiv3" class="chartdiv"></div>
+<div id="chartdiv4" class="chartdiv"></div>
+<script type="text/javascript">
+  var top_sources,source;
+  dataFormatter("http://api_stage.dataweave.co/v6/app/retailer/bundle_history/?api_key=8034178a60ee3eb70d8d5ab27a561485&bundle_id=8&field=available_price&aggregate=0&filter_by={%22daterange%22:[20170213,20170315]}","#00bad8","chartdiv1");
+  dataFormatter("http://api_stage.dataweave.co/v6/app/retailer/bundle_history/?api_key=8034178a60ee3eb70d8d5ab27a561485&bundle_id=696&field=available_price&aggregate=0&filter_by={%22daterange%22:[20170213,20170315]}","#cc8dc7","chartdiv2");
+  dataFormatter("http://api_stage.dataweave.co/v6/app/retailer/bundle_history/?api_key=8034178a60ee3eb70d8d5ab27a561485&bundle_id=764&field=available_price&aggregate=0&filter_by={%22daterange%22:[20170213,20170315]}","#f2dc27","chartdiv3");
+  dataFormatter("http://api_stage.dataweave.co/v6/app/retailer/bundle_history/?api_key=8034178a60ee3eb70d8d5ab27a561485&bundle_id=279&field=available_price&aggregate=0&filter_by={%22daterange%22:[20170213,20170315]}","#dc302c","chartdiv4");
+
+  function dataFormatter(api,clr,div){
+    getFun(onComplete);
+    function getFun(whenDone) {
+        $.getJSON(api,function(json){
+          top_sources = json.top_sources;
+          var noSources = [];
+          function chkValSrc(chk){
+              var x = 0;
+              for(j=0;j<json.data.length;j++){
+                if (chk == json.data[j].source) {
+                  x++;
+                }
+              }return x;
+            }
+            for (i=0;i<json.top_sources.length;i++){
+              var z = chkValSrc(json.top_sources[i]);
+              if (z <= 0) {
+                noSources.push(json.top_sources[i]);
+              }
+            }
+          source = $(json.top_sources).not(noSources).get();
+
+          var crawl_date = dformatter();
+          var values = valformatter();
+          var color = colorformatter();
+
+          var mdata = [];
+          var src = new Set();
+          for(i=0;i<source.length;i++){
+          obj = {};
+          for(j=0;j<json.data.length;j++){
+            if(source[i] == json.data[j].source){
+              obj.source = json.data[j].source;
+              obj[json.data[j].crawl_date+'_value'] = json.data[j].field_value;
+              src.add(json.data[j].crawl_date+'_value');
+              obj.height = 1;
+              for(l = 0; l<crawl_date.length;l++){
+                if (!obj.hasOwnProperty(crawl_date[l]+'_value')) {
+                  obj[crawl_date[l]+'_value'] = 0;
+                  obj[crawl_date[l]+'_color'] = "#aaa";
+                }
+              }
+              for(k=0;k<values.length;k++){
+              if (values[k] == json.data[j].field_value) {
+                obj[json.data[j].crawl_date+'_color'] = color[k];
+              }
+              }
+            }
+          }
+          mdata.push(obj);
+        }
+        var srcArr = Array.from(src);
+        console.log(mdata);
+            
+            
+        whenDone(mdata,crawl_date,div);
+
+
+          function dformatter(){
+            var date = [];
+            for(i=0;i<json.data.length;i++){
+              date.push(json.data[i].crawl_date);
+            }
+            var uniquedate = removeDuplicates(date);
+            uniquedate.sort(function(a,b){
+              a = a.split('-').join('');
+              b = b.split('-').join('');
+                return a-b;
+            });
+            return uniquedate;
+          }
+
+          function valformatter(){
+            var Values = [];
+            for(i=0;i<json.data.length;i++){
+              Values.push(json.data[i].field_value);
+            }
+            var uniqueValues= removeDuplicates(Values);
+            uniqueValues.sort(function(a,b){
+                return b-a;
+            });
+            return uniqueValues;
+          }
+
+          function colorformatter(){
+            var i,shade = clr;
+            var col = [];
+            col.push(shade);
+            for (i = values.length-1; i > 0; i--) {
+              var NewColor = LightenDarkenColor(shade, 7);
+              // color[i] = NewColor;
+              col.push(NewColor);
+              shade = NewColor;
+            }
+            return col;
+
+            function LightenDarkenColor(col, amt) {
+              var usePound = false;
+              if (col[0] == "#") {
+                col = col.slice(1);
+                usePound = true;
+              }
+              var num = parseInt(col,16);
+              var r = (num >> 16) + amt;
+                if (r > 255) r = 255;
+                else if  (r < 0) r = 0;
+              var b = ((num >> 8) & 0x00FF) + amt;
+                if (b > 255) b = 255;
+                else if  (b < 0) b = 0;
+              var g = (num & 0x0000FF) + amt;
+                if (g > 255) g = 255;
+                else if (g < 0) g = 0;
+              return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+            }
+          }
+          function removeDuplicates(num) {
+            var x,out=[],obj={};
+            for (x=0; x<num.length; x++) {
+                obj[num[x]]=0;
+            }
+            for (x in obj) {
+               out.push(x);
+            }
+          return out;
+          }
+        });
+    }
+  }
+
+  function onComplete(a,dates,div) {
+      var maindata = a;
+      var chart = AmCharts.makeChart(div,{
+      "type": "serial",
+      "dataProvider": maindata,
+      "categoryField": "source",
+      "columnWidth": 1,
+      "graphs" : (function(){
+        var graphArray = [];
+        for(var i=0;i<dates.length;i++){
+          var x = dates[i]+'_value';
+          graphArray.push({
+            "valueField" : "height",
+            "type": "column",
+            "fillAlphas": 1,
+            "lineAlpha": 0,
+            "fillColorsField": dates[i]+"_color",
+            "labelText":  "[["+x+"]]",
+            "balloonText" : "[["+x+"]]",
+          });
+        }
+        return graphArray;
+      })(),
+      "columnWidth": 1,
+      "valueAxes": [{
+        "stackType": "regular",
+        "maximum": dates.length-23,//no.of dates* height
+        "axisAlpha": 0,
+        "gridAlpha": 0,
+        "labelsEnabled": false,
+          "guides": (function(){
+            var graphArray = [];
+            var a = parseInt(maindata[0].height)/2;
+            for(i=0;i<dates.length;i++){
+              graphArray.push({
+                "value" : a,
+                "label": dates[i]
+              });
+              a += parseInt(maindata[0].height);
+            }
+            return graphArray;
+          })(),
+      }],
+      "categoryAxis":{
+        "tickLength" : 0,
+        "axisAlpha": 0,
+        "gridAlpha": 0,
+        "labelRotation": 35
+      },
+      "balloon": {
+          "borderThickness": 0.5,
+          "fillAlpha": 1,
+      }
+
+
+    });
+  }
+</script>
+
+</body>
+</html>

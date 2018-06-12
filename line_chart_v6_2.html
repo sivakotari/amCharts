@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="amcharts_3.20.19.free/amcharts/amcharts.js"></script>
+	<script src="amcharts_3.20.19.free/amcharts/serial.js"></script>
+	<!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"> -->
+	<style type="text/css">
+	/*@font-face {
+	  font-family: 'Montserrat';
+	  font-style: normal;
+	  font-weight: 400;
+	  src: url(https://fonts.gstatic.com/s/montserrat/v9/zhcz-_WihjSQC0oHJ9TCYPk_vArhqVIZ0nv9q090hN8.woff2) format('woff2');
+	*/}
+	#myDiv{
+		font-family: Montserrat;
+	}
+	</style>
+</head>
+<body>
+	<div id="myDiv" style="height: 350px; width: 1000px;"></div>
+	<script type="text/javascript">
+		var data = [
+		{
+			"date" : "01-01-2017",
+			"Amazon" : 0,
+			"Flipkart" : 0,
+			"Jabong" : 0,
+			"Paytm" : 0,
+			"SnapDeal" : 0,
+			"AmazonTip" : 534672,
+			"FlipkartTip" : 095250,
+			"JabongTip" : "<div style=''><h1>H1</h1></div>",
+			"PaytmTip" : 321450,
+			"SnapDealTip" : 423200,
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "02-01-2017",
+			"Amazon" : 0,
+			"Flipkart" : 0,
+			"Jabong" : 90,
+			"Paytm" : 32,
+			"SnapDeal" : 200,
+			"AmazonTip" : 534672,
+			"FlipkartTip" : 095250,
+			"JabongTip" : "<div style=''><h1>H1</h1></div>",
+			"PaytmTip" : 321450,
+			"SnapDealTip" : 423200,
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "03-01-2017",
+			"Amazon" : 84,
+			"Flipkart" : 0,
+			"Jabong" : 90,
+			"Paytm" : 66,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "04-01-2017",
+			"Amazon" : 0,
+			"Flipkart" : 0,
+			"Jabong" : 90,
+			"Paytm" : 0,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "05-01-2017",
+			"Amazon" : 114,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 40,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "06-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "07-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "08-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "09-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "10-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "11-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "12-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "13-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 0,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "14-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 0,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "15-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 0,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "16-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 0,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "17-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 135,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "18-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "19-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "20-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "21-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "22-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "23-01-2017",
+			"Amazon" : 80,
+			"Flipkart" : 150,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "24-01-2017",
+			"Amazon" : 0,
+			"Flipkart" : 0,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "25-01-2017",
+			"Amazon" : 50,
+			"Flipkart" : 0,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "26-01-2017",
+			"Amazon" : 70,
+			"Flipkart" : 0,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "27-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 0,
+			"Jabong" : 90,
+			"Paytm" : 10,
+			"SnapDeal" : 200,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "28-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 143,
+			"Jabong" : 0,
+			"Paytm" : 10,
+			"SnapDeal" : 290,
+			"AmazonTip" : "amazon tool tip",
+			"FlipkartTip" : "flipkart tool tip",
+			"JabongTip" : "jabong tool tip",
+			"PaytmTip" : "pytm tool tip",
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "29-01-2017",
+			"Amazon" : 100,
+			"Flipkart" : 0,
+			"Jabong" : 0,
+			"Paytm" : 0,
+			"SnapDeal" : 200,
+			"AmazonTip" : 72,
+			"FlipkartTip" : 50,
+			"JabongTip" : 10,
+			"PaytmTip" : 234,
+			"SnapDealTip" : 200,
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		},
+		{
+			"date" : "30-01-2017",
+			"Amazon" : 0,
+			"Flipkart" : 0,
+			"Jabong" : 0,
+			"Paytm" : 0,
+			"SnapDeal" : 10,
+			"AmazonTip" : 534672,
+			"FlipkartTip" : 095250,
+			"JabongTip" : "<div style=''><h1>H1</h1></div>",
+			"PaytmTip" : 321450,
+			"SnapDealTip" : "snapdeal tool tip",
+			"dashLengthAmazon" : 0,
+			"dashLengthFlipkart" : 0,
+			"dashLengthJabong" : 0,
+			"dashLengthPaytm" : 0,
+			"dashLengthSnapDeal" : 0,
+			"Amazonbullet": "round",
+			"Flipkartbullet": "round",
+			"Jabongbullet": "round",
+			"Paytmbullet": "round",
+			"SnapDealbullet": "round"
+		}
+		];
+		var sources = Object.keys(data[0]);
+		var startValues = Object.assign({}, data[0]);
+		// console.log(data[0]);
+		// console.log(startValues);
+		var endValues = Object.assign({},data[data.length-1]);
+		
+
+		var chart = AmCharts.makeChart("myDiv",{
+			"type" : "serial",
+			"creditsPosition": "bottom-right",
+			"dataProvider" : data,
+			"categoryField" : "date",
+			"dataDateFormat" : "DD-MM-YYYY",
+			"graphs" : [{
+				"valueField" : sources[1],			
+				"bulletBorderAlpha": 1,
+				"bulletColor": "#FFFFFF",
+				"useLineColorForBulletBorder": true,
+				"bulletField": "Amazonbullet",
+				"lineThickness": 1,
+	        	"lineColor": "#4db0ec",
+	        	"balloonFunction": balloon,
+	        	// "balloon":{
+	        	// 	"color": "#4db0ec"
+	        	// },
+	        	// "balloonFunction": balloon,
+	        	// "lineColorField": "#000",
+	        	// "balloonText": "<div style='text-align : left; font-size: 1.2em;padding: 0 0.3em'><span style='color:#000;'>DATE: [[date]]</span></br><span style='color:#4db0ec;'>Amazon: [[AmazonTip]]</span></br><span style='color:#f08278;'>Flipkart: [[FlipkartTip]]</span></br><span style='color:#68c68f;'>Jabong: [[JabongTip]]</span></br><span style='color:#eea565;'>Paytm: [[PaytmTip]]</span></br><span style='color:#6ba6ce;'>SnaDdeal: [[SnapDealTip]]</span></div>",
+	        	"title" : sources[1],
+	        	"dashLengthField": "dashLengthAmazon",
+	        	// "hidden": false
+			},
+			{
+				"valueField" : sources[2],
+				"bulletBorderAlpha": 1,
+				"bulletColor": "#FFFFFF",
+				"useLineColorForBulletBorder": true,
+				"bulletField": "Flipkartbullet",
+				"lineThickness": 1,
+	        	"lineColor": "#f08278",
+	        	"balloonFunction": balloon,
+	        	"title" : sources[2],
+	        	"dashLengthField": "dashLengthFlipkart",
+	        	// "hidden": false
+			},
+			{
+				"valueField" : sources[3],
+				"bulletBorderAlpha": 1,
+				"bulletColor": "#FFFFFF",
+				"useLineColorForBulletBorder": true,
+				"bulletField": "Jabongbullet",
+				"lineThickness": 1,
+	        	"lineColor": "#68c68f",
+	        	"balloonFunction": balloon,
+	        	"title" : sources[3],
+	        	"dashLengthField": "dashLengthJabong",
+	        	// "hidden": false
+			},
+			{
+				"valueField" : sources[4],
+				"bulletField": "Paytmbullet",
+		        "bulletBorderAlpha": 1,
+		        "bulletColor": "#FFFFFF",
+		        "useLineColorForBulletBorder": true,
+				"lineThickness": 1,
+	        	"lineColor": "#eea565",
+	        	"balloonFunction": balloon,
+	        	"title" : sources[4],
+	        	"dashLengthField": "dashLengthPaytm",
+	        	// "hidden": false
+			},
+			{
+				"valueField" : sources[5],
+				"bulletBorderAlpha": 1,
+				"bulletColor": "#FFFFFF",
+				"useLineColorForBulletBorder": true,
+				"bulletField": "SnapDealbullet",
+				"lineThickness": 1,
+	        	"lineColor": "#6ba6ce",
+	        	"balloonFunction": balloon,
+	        	"title" : sources[5],
+	        	"dashLengthField": "dashLengthSnapDeal",
+	        	// "hidden": false
+			}],
+			"valueAxes": [{
+		        "axisAlpha": 0,
+		        "gridAlpha": 1,
+		        "gridColor": "#D9D9D9",
+		        // "fillAlpha": 1,
+		        // "fillColor": "#f6fbff",
+	   			// "minVerticalGap": 20,
+		        // "labelsEnabled": false
+		        // "labelsEnabled": false
+		    }],
+			"categoryAxis": {
+	   			 // "gridPosition": "start",
+	   			 "parseDates": true,
+	   			 "equalSpacing": true,
+	   			 "axisAlpha": 0.3,
+	   			 "gridAlpha": 0,
+	   			 "boldLabels": true,
+	   			 "tickLength" : 0
+	   			 // "fillAlpha": 1
+	 		 },
+			"chartCursor": {  //mouse pointer for tool tip
+				// "fullWidth": true,
+				// "cursorAlpha": 0.05,
+				// "valueLineEnabled":true,
+				// "valueLineBalloonEnabled":true,
+	        	"cursorAlpha": 1,
+	        	"categoryBalloonEnabled":false,
+	        	"cursorColor": "#f00",
+	        	"oneBalloonOnly":true
+	        	// "valueLineBalloonEnabled":true,
+	        	// "avoidBalloonOverlapping": true
+	   		 },
+	   		 "balloon": {
+			    "cornerRadius": 3,
+			    "borderThickness": 0,
+			    "adjustBorderColor" : true,
+			    // "borderColor" : "#ccc",
+			    // "color" : "#777",
+			    "fillColor": "#fff",
+			    "fillAlpha": 1,
+			    "shadowAlpha" : 0.2,
+			    "verticalPadding": 10,
+	  		},
+	  		"legend": {
+	  			"markerType": "circle",
+		        "position": "top",
+		        "valueAlign": "left",
+		        "markerSize": 10,
+		        "valueWidth": 0,
+		        // "switchable": true,
+		        // "clickMarker": handleLegendClick,
+		        // "clickLabel": handleLegendClick
+		        // 	"useMarkerColorForLabels":true
+	    	},
+	    	// "startDuration": 0.3
+		});
+
+		// function handleLegendClick(graph) {
+		// 	var chart = graph.chart;
+		// 	  for( var i = 0; i < chart.graphs.length; i++ ) {
+		// 	  	console.log(graph.id == chart.graphs[i].id);
+		// 	    if ( graph.id == chart.graphs[i].id )
+		// 	      chart.hideGraph(chart.graphs[i]);
+		// 	    else
+		// 	      chart.showGraph(chart.graphs[i]);
+		// 	  }
+		// 	chart.legend.markerDisabledColor = "#AAB3B3";
+		// 	chart.legend.switchable = true;
+		// 	return false;
+
+
+		// 	var check = 0;
+		// 	for(i=0;i<=chart.graphs.length-1;i++){
+		// 		if ( chart.graphs[i].hidden == true) {
+		// 			check+=1;
+		// 		}console.log("im for");
+		// 	}
+		// 	if (check == chart.graphs.length) {
+		// 		chart.addLabel(0, '50%', 'The chart contains no data', 'center');console.log("im label");
+		// 	}
+		// }
+
+		
+		function balloon(DataItem){
+			var g = chart.graphs;
+			var text = "<div style='text-align : left; font-size: 1.2em;padding: 0 0.3em'><span style='color:#000;'>DATE:"+DataItem.dataContext.date+"</span></br>";
+			function start(value){
+		    	for(var i = 0,x = 0; i < g.length; i++){
+		    		if (value[sources[i+1]] == 0) {
+		    			x += 1;
+		    		}
+		    	}
+		    	if (x == 5) {
+		    		return true;
+		    	}
+		    	else{
+		    		return false;
+		    	}
+		    }
+
+		    function fun(value,abc){
+		    	for (var i = 0; i < g.length; i++) {
+			        if (g[i].hidden) {
+			            continue;
+			        }var j = 6+i;
+			        if (value[sources[i+1]] == abc) {
+		        		text += "<span style='color:"+g[i].lineColor+";'>"+sources[i+1]+": NA</span></br>";
+			        }
+			        else{
+			        	text += "<span style='color:"+g[i].lineColor+";'>"+sources[i+1]+": "+DataItem.dataContext[sources[i+1]]+"</span></br>";
+			        }
+			        // text += "<span style='color:#4db0ec;'>"+DataItem.dataContext[i]+": [["+sources[i]+"]]</span></br>";
+			    }
+			    text += "</div>";
+			    return text;
+		    }
+
+			if (DataItem.index == 0) {
+				var value = startValues;
+				// var key = Object.keys(startValues);
+				// if (start(value)) {
+			 //    	for(var i = 0; i < g.length; i++){
+			 //    		return "";
+			 //    	}
+			 //    }
+			 //    else{
+			    	var abc = 0;
+			    	var x = fun (value,abc);
+			    	return x;
+			    // }
+		    }
+		    else if (DataItem.index == data.length-1) {
+		    	var value = endValues;
+		    	// var key = Object.keys(endValues);
+				// if (start(value)) {
+			 //    	for(var i = 0; i < g.length; i++){
+			 //    		return "";
+			 //    	}
+			 //    }
+			 //    else{
+			    	var abc = 0;
+			    	var x = fun (value,abc);
+			    	return x;
+			    // }
+		    }
+		    else{
+		    	var abc = null;
+				var x = fun (DataItem.dataContext,abc);
+		    	return x;
+			}
+		}
+
+
+		for(i=0;i<sources.length-7;i++){
+			while (remove(sources[i+1], data, chart)) {}
+			// console.log(sources[i+1]);
+		}		
+		function remove(src, arrdata, dash) {
+			for (var i in arrdata) {
+				// console.log(arrdata.length);
+			    if (arrdata[i][src] == 0) {
+			    	arrdata[i][src] = null;
+			    	// arrdata[i]["bullet"] = '';
+
+			    	//console.log(arrdata[i][src],src);
+
+			    	if(i == 0) {
+			    		arrdata[i][src+'bullet'] = '';
+			    		for(var j=i; j < arrdata.length-1; j++){ 
+			    			if (!(arrdata[parseInt(j)+1][src] == 0)) {
+							    arrdata[i][src] = arrdata[parseInt(j)+1][src];
+							    arrdata[i]['dashLength'+src] = 5;
+							    break;
+							    
+						    }
+				    	}
+			      	}
+			      	else if( i == arrdata.length-1) {
+			      		arrdata[i][src+'bullet'] = '';
+			      		for(var j=i; j>=0; j--){
+			      			if (!(arrdata[parseInt(j)-1][src] == null)) {
+							    arrdata[i][src] = arrdata[parseInt(j)-1][src];
+							    arrdata[parseInt(j)-1]['dashLength'+src] = 5;
+							    break;							    
+						    }
+			      		}
+			      	}
+			      	else{
+			      		arrdata[parseInt(i)-1]['dashLength'+src] = 5;
+			      	}
+			    }
+			}
+		}
+
+		// function balloon(DataItem){
+		// 	var g = chart.graphs;
+		// 	var text = "<div style='text-align : left; font-size: 1.2em;padding: 0 0.3em'><span style='color:#000;'>DATE:"+DataItem.dataContext.date+"</span></br>";
+
+		// 	for (var i = 0; i < g.length; i++) {
+		//         if (g[i].hidden) {			
+		//             continue;
+		//         }
+		//         // text += "<span style='color:"+colors[i]+";'>"+sources[j]+": "+Math.round(DataItem.dataContext[sources[parseInt(j)]+'Tip']*100)/100+"</span></br>";
+		//         //'sources' and 'colors' are global variables..so, can accessed in chart.graph and balloon function also
+		//         if (DataItem.dataContext[sources[i+1]] == null) {
+		//         	text += "<span>"+sources[i+1]+": NA</span></br>";
+		//         }
+		//         else{
+		//         	text += "<span>"+sources[i+1]+": "+DataItem.dataContext[sources[i+1]]+"</span></br>";
+		//         }
+		        
+		//     }
+		//     // console.log(DataItem+"dataitem");
+		//     text += "</div>";
+		//     return text;
+		// }
+	</script>
+</body>
+</html>

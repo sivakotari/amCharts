@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+</head>
+<body>
+<div id="chartdiv" style="height: 330px; width: 520px;"></div>
+<script type="text/javascript">
+	AmCharts.makeChart("chartdiv",{
+		"type": "serial",
+		"dataProvider": [
+			{
+				"pdt_type": "Electronics",
+				"Avg": 50,
+				"You": 100,
+				"Highest": 150
+			},
+			{
+				"pdt_type": "Books",
+				"Avg": 20,
+				"You": 70,
+				"Highest": 50
+			},
+			{
+				"pdt_type": "Clothing",
+				"Avg": 80,
+				"You": 50,
+				"Highest": 180
+			},
+			{
+				"pdt_type": "Toys",
+				"Avg": 50,
+				"You": 100,
+				"Highest": 100
+			},
+			{
+				"pdt_type": "Household",
+				"Avg": 50,
+				"You": 100,
+				"Highest": 150
+			},
+			{
+				"pdt_type": "Footwear",
+				"Avg": 50,
+				"You": 100,
+				"Highest": 150
+			},
+			{
+				"pdt_type": "Sports",
+				"Avg": 50,
+				"You": 100,
+				"Highest": 150
+			},
+			{
+				"pdt_type": "BabyProducts",
+				"Avg": 50,
+				"You": 100,
+				"Highest": 150
+			}
+		],
+		"categoryField": "pdt_type",
+		"graphs": [
+			{
+				"valueField" : "Avg",
+				"type": "column",
+				"fillAlphas": 0.6,
+				"title" : "Avg",
+			},
+			{
+				"valueField" : "You",
+				"type": "column",
+				"fillAlphas": 0.6,
+				"title" : "You",
+			},
+			{
+				"valueField" : "Highest",
+				"type": "column",
+				"fillAlphas": 0.6,
+				"title" : "Highest",
+			}
+		],
+		"columnSpacing": 0,
+		"columnWidth": 0.5,
+	    "categoryAxis": {
+            "gridPosition": "start",
+            "axisAlpha": 0,
+        },
+		"valueAxes": [{
+	        "axisAlpha": 0,
+	        "gridAlpha": 0,
+	        "labelsEnabled": false
+	    }],
+	    "legend": {
+	    	"markerType": "square",
+	    	"position": "top",
+	    	"valueAlign": "left",
+	    	"markerSize": 10,
+	    	"valueWidth": 0,
+	    },
+	});
+</script>
+
+</body>
+</html>

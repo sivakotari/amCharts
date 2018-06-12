@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+	<style type="text/css">		
+		.amcharts-chart-div a{
+			display: none !important;
+		}
+	</style>
+</head>
+<body>
+	<div id="chartdiv" style="height: 450px; width: 550px;"></div>
+	<script type="text/javascript">
+	
+	function LightenDarkenColor(col, amt) {
+	  
+	    var usePound = false;
+	  
+	    if (col[0] == "#") {
+	        col = col.slice(1);
+	        usePound = true;
+	    }
+	 
+	    var num = parseInt(col,16);
+	 
+	    var r = (num >> 16) + amt;
+	 
+	    if (r > 255) r = 255;
+	    else if  (r < 0) r = 0;
+	 
+	    var b = ((num >> 8) & 0x00FF) + amt;
+	 
+	    if (b > 255) b = 255;
+	    else if  (b < 0) b = 0;
+	 
+	    var g = (num & 0x0000FF) + amt;
+	 
+	    if (g > 255) g = 255;
+	    else if (g < 0) g = 0;
+	 
+	    return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+	  
+	}
+
+
+
+	var color = [];
+	var i,shade = "#f3500f";
+	for (i = 4; i >= 0; i--) {
+		var NewColor = LightenDarkenColor(shade, 30);
+		color[i] = NewColor;
+		shade = NewColor;
+	}
+
+
+	var inputData = [
+		{
+			"month": "Jan",
+			"height": 5,
+			"val1": "<100",
+			"val3": "101-200",
+			"val2": "201-300",
+			"val4": "301-400",
+			"val5": ">400",
+			"col1": color[0],
+		    "col3": color[1],
+		    "col2": color[2],
+		    "col4": color[3],
+		    "col5": color[4]
+		},
+		{
+			"month": "Feb",
+			"height": 5,
+			"val4": "<100",
+			"val2": "101-200",
+			"val5": "201-300",
+			"val3": "301-400",
+			"val1": ">400",
+			"col4": color[0],
+		    "col2": color[1],
+		    "col5": color[2],
+		    "col3": color[3],
+		    "col1": color[4]
+		},
+		{
+			"month": "Mar",
+			"height": 5,
+			"val5": "<100",
+			"val4": "101-200",
+			"val3": "201-300",
+			"val1": "301-400",
+			"val2": ">400",
+			"col5": color[0],
+		    "col4": color[1],
+		    "col3": color[2],
+		    "col1": color[3],
+		    "col2": color[4]
+		},
+		{
+			"month": "Apr",
+			"height": 5,
+			"val4": "<100",
+			"val1": "101-200",
+			"val2": "201-300",
+			"val3": "301-400",
+			"val5": ">400",
+			"col4": color[0],
+		    "col1": color[1],
+		    "col2": color[2],
+		    "col3": color[3],
+		    "col5": color[4]
+		},
+		{
+			"month": "May",
+			"height": 5,
+			"val5": "<100",
+			"val4": "101-200",
+			"val3": "201-300",
+			"val2": "301-400",
+			"val1": ">400",
+			"col5": color[0],
+		    "col4": color[1],
+		    "col3": color[2],
+		    "col2": color[3],
+		    "col1": color[4]
+		}
+	];
+	// var x = inputData[0];
+
+
+	AmCharts.makeChart("chartdiv",{
+		"type": "serial",
+		"dataProvider": inputData,
+		"categoryField": "month",			
+		"graphs": [
+		{
+			"valueField": "height",
+			"type": "column",
+			"fillAlphas": 01,
+			"lineAlpha": 0,
+			"fillColorsField": "col1",
+			"labelText":  "[[val1]]",
+			"balloonText": "[[val1]]"			
+		},
+		{
+			"valueField": "height",
+			"type": "column",
+			"fillAlphas": 1,
+			"lineAlpha": 0,
+			"fillColorsField": "col2",
+			"labelText":  "[[val2]]",
+			"balloonText": "[[val2]]"			
+		},
+		{
+			"valueField": "height",
+			"type": "column",
+			"fillAlphas": 1,
+			"lineAlpha": 0,
+			"fillColorsField": "col3",
+			"labelText":  "[[val3]]",
+			"balloonText": "[[val3]]"			
+		},
+		{
+			"valueField": "height",
+			"type": "column",
+			"fillAlphas": 1,
+			"lineAlpha": 0,
+			"fillColorsField": "col4",
+			"labelText":  "[[val4]]",
+			"balloonText": "[[val4]]"			
+		},
+		{
+			"valueField": "height",
+			"type": "column",
+			"fillAlphas": 1,
+			"lineAlpha": 0,
+			"fillColorsField": "col5",
+			"labelText":  "[[val5]]",
+			"balloonText": "[[val5]]"				
+		}
+		],
+		"columnWidth": 1,
+		"categoryAxis":{
+			"labelsEnabled": false,
+			"axisAlpha": 0,
+			// "gridAlpha": 0,
+			"guides": [{
+			      "category": "Jan",
+			      "label": "2012"
+			    }, {
+			      "category": "Feb",
+			      "label": "2013"
+			    }, {
+			      "category": "Mar",
+			      "label": "2014"
+			    }, {
+			      "category": "Apr",
+			      "label": "2015"
+			    }, {
+			      "category": "May",
+			      "label": "2016"
+			    }]
+		},
+		"valueAxes": [{
+			"labelsEnabled": false,
+			"stackType": "regular",
+			"maximum": 25,
+			"axisAlpha": 0,
+			"gridAlpha": 0,
+			"guides": [
+				{
+			      "value": 2.5,
+			      "label": "Amzon"
+			    }, {
+			      "value": 7.5,
+			      "label": "SnapDeal"
+			    }, {
+			      "value": 12.5,
+			      "label": "Flipkart"
+			    }, {
+			      "value": 17.5,
+			      "label": "Paytm"
+			    }, {
+			      "value": 22.5,
+			      "label": "eBay"
+			    }
+			]
+
+		}],
+		
+	});
+	</script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+	<script src="jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		$.getJSON("http://api_stage.dataweave.co/v6/app/retailer/bundle_history/?api_key=8034178a60ee3eb70d8d5ab27a561485&bundle_id=1260&field=available_price&aggregate=0&filter_by={%22daterange%22:[20170204,20170306]}",function(json){
+			
+			var dates = [];
+			for(i=0;i<json.data.length;i++){
+				dates.push(json.data[i].crawl_date);
+			}
+			function removeDuplicates(num) {
+				var x,out=[],obj={};
+				for (x=0; x<num.length; x++) {
+				  	obj[num[x]]=0;
+				}
+				for (x in obj) {
+				   out.push(x);
+				}
+				return out;
+			}
+			uniquedate = removeDuplicates(dates);
+			uniquedate.sort(function(a,b){
+				a = a.split('-').join('');
+			 	b = b.split('-').	join('');
+			  	return a-b;
+			});
+			var maindata = [];
+			for(i=0;i<uniquedate.length;i++){
+				mainobj = {};
+				for(j=0;j<json.data.length;j++){
+					if(uniquedate[i] == json.data[j].crawl_date){
+						mainobj.crawl_date = json.data[j].crawl_date;
+						mainobj[json.data[j].source] = json.data[j].field_value;
+						mainobj[json.data[j].source+"Tip"] = json.data[j].version;
+						mainobj[json.data[j].source+"Bullet"] = "round";
+						mainobj[json.data[j].source+"DashLength"] = 0;
+					}
+				}
+				maindata.push(mainobj);
+			} 
+			// console.log(maindata);
+			var colors = ["#4db0ec","#f08278","#6ba6ce","#68c68f","#eea565"];
+			var noSources = [];
+			var noColors = [];
+			function chkValSrc(chk){
+				var x = 0;
+				for(j=0;j<json.data.length;j++){
+					if (chk == json.data[j].source) {
+						x++;
+					}
+				}return x;
+			}
+			for (i=0;i<json.top_sources.length;i++){
+				var z = chkValSrc(json.top_sources[i]);
+				if (z <= 0) {
+					noSources.push(json.top_sources[i]);
+					noColors.push(colors[i]);
+				}
+			}
+
+			
+			var final_colors = $(colors).not(noColors).get();
+			var final_top_sources = $(json.top_sources).not(noSources).get();
+
+			function add(){
+				for (var i in maindata){
+					for(j = 0; j<final_top_sources.length;j++){
+						if (!maindata[i].hasOwnProperty(final_top_sources[j])) {
+							maindata[i][final_top_sources[j]] = 0;
+						}
+					}
+				}
+			}
+			add();
+			var initStartVal = Object.assign({}, maindata[0]);
+			var initEndVal = Object.assign({},maindata[maindata.length-1]);
+			for(i=0;i<final_top_sources.length;i++){
+				remove(final_top_sources[i]);
+			}
+			function remove(src) {
+				for (var i in maindata) {
+				    if (maindata[i][src] == 0 ) {
+				    	maindata[i][src] = null;
+				    	if(i == 0) {
+				    		maindata[i][src+'Bullet'] = '';
+				    		for(var j=i; j < maindata.length-1; j++){ 
+				    			if (!(maindata[parseInt(j)+1][src] == 0)) {
+								    maindata[i][src] = maindata[parseInt(j)+1][src];
+								    maindata[i][src+'DashLength'] = 5;
+								    break;
+								}
+					    	}
+				      	}
+				      	else if( i == maindata.length-1) {
+				      		maindata[i][src+'bullet'] = '';
+				      		for(var j=i; j>=0; j--){
+				      			if (!(maindata[parseInt(j)-1][src] == null)) {
+								    maindata[i][src] = maindata[parseInt(j)-1][src];
+								    maindata[parseInt(j)-1][src+'DashLength'] = 5;
+								    break;							    
+							    }
+				      		}
+				      	}
+				      	else{
+				      		maindata[parseInt(i)-1][src+'DashLength'] = 5;
+				      	}
+				    }
+				}
+			}
+			function balloon(DataItem){
+				var g = chart.graphs;
+				var text = "<div style='text-align : left; font-size: 1.2em;padding: 0 0.3em'><span style='color:#000;'>DATE:"+DataItem.dataContext.crawl_date+"</span><hr>";
+				function fun(value,dummy){
+			    	for (var i = 0; i < g.length; i++) {
+						if (g[i].hidden) {
+				            continue;
+				        }
+			            if (value[final_top_sources[i]] == dummy) {
+			            	text += "<span style='color:"+final_colors[i]+";'>"+final_top_sources[i]+": NA</span></br>";
+			            }
+			            else{
+			    	        text += "<span style='color:"+final_colors[i]+";'>"+final_top_sources[i]+": "+DataItem.dataContext[final_top_sources[i]]+"</span></br>";
+			        	}
+			    	}
+				    text += "</div>";
+			    	return text;
+		    	}
+		    	if (DataItem.index == 0) {
+		    		return fun(initStartVal,0);
+		    	}
+		    	else if(DataItem.index == maindata.length-1){
+		    		return fun(initEndVal,0);
+		    	}
+		    	else{
+		    		return fun(DataItem.dataContext,null);
+			    }
+			}
+
+			var chart = AmCharts.makeChart("myDiv",{
+				"type" : "serial",
+				"dataProvider" : maindata,
+				"categoryField" : "crawl_date",
+				"dataDateFormat" : "YYYY-MM-DD",
+				"graphs" : (function(){
+					var graphArray = [];
+					for(i=0;i<final_top_sources.length;i++){
+						graphArray.push({
+							"valueField" : final_top_sources[i],
+							"title" : final_top_sources[i],
+							"bulletField" : final_top_sources[i]+"Bullet",
+							"dashLengthField": final_top_sources[i]+"DashLength",
+							"lineColor": final_colors[i],
+							"bulletBorderAlpha": 1,
+							"bulletColor": "#FFFFFF",
+							"useLineColorForBulletBorder": true,
+							"lineThickness": 1,
+							"balloonFunction": balloon,
+							// "balloonText":""
+						});
+					}
+					return graphArray;
+				}()),
+				"valueAxes": [{
+			        "axisAlpha": 0,
+			        "gridAlpha": 1,
+			        "gridColor": "#D9D9D9",
+			    }],
+				"categoryAxis": {
+		   			 "parseDates": true,
+		   			 "equalSpacing": true,
+		   			 "axisAlpha": 0.3,
+		   			 "gridAlpha": 0,
+		   			 "boldLabels": true,
+		   			 "tickLength" : 0
+		 		 },
+				"chartCursor": {
+		        	"cursorAlpha": 1,
+		        	"categoryBalloonEnabled":false,
+		        	"cursorColor": "#f00",
+		        	"oneBalloonOnly":true
+		   		 },
+		   		 "balloon": {
+				    "cornerRadius": 3,
+				    "borderThickness": 0,
+				    "adjustBorderColor" : true,
+				    "fillColor": "#fff",
+				    "fillAlpha": 1,
+				    "shadowAlpha" : 0.2,
+				    "verticalPadding": 10,
+		  		},
+		  		"legend": {
+		  			"markerType": "circle",
+			        "position": "top",
+			        "valueAlign": "left",
+			        "markerSize": 10,
+			        "valueWidth": 0,
+			        // 	"useMarkerColorForLabels":true
+		    	},
+		    	"startDuration": 0.1
+			});
+
+		});
+	</script>
+</head>
+<body>
+	<div id="myDiv" style="height: 350px; width: 1100px;"></div>
+</body>
+</html>

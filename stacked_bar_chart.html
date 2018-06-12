@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="amcharts_3.20.19.free/amcharts/amcharts.js"></script>
+	<script src="amcharts_3.20.19.free/amcharts/serial.js"></script>
+	<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+	<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+	<style type="text/css">
+		.amChartsLegend{
+			top: 5px !important;
+		}
+		.amcharts-chart-div a{
+			display: none !important;
+		}
+	</style>
+</head>
+<body>
+	<div id="chartdiv" style="height: 300px; width: 1100px;"></div>
+	<script type="text/javascript">
+		AmCharts.makeChart("chartdiv",{
+			"type" : "serial",
+			"dataProvider": [
+				{
+					"label": "Gaming",
+					"Priced Highest": 16,
+					"Equally Priced": 0,
+					"Priced Lowest": 10
+				},
+				{
+					"label": "Appliance",
+					"Priced Highest": 62,
+					"Equally Priced": 10,
+					"Priced Lowest": 25
+				},
+				{
+					"label": "Homeandliving",
+					"Priced Highest": 9,
+					"Equally Priced": 30,
+					"Priced Lowest": 19
+				},
+				{
+					"label": "Sportsandhealth",
+					"Priced Highest": 45,
+					"Equally Priced": 15,
+					"Priced Lowest": 1
+				},
+				{
+					"label": "Apparel",
+					"Priced Highest": 10,
+					"Equally Priced": 3,
+					"Priced Lowest": 17
+				},
+				{
+					"label": "Electronics",
+					"Priced Highest": 24,
+					"Equally Priced": 35,
+					"Priced Lowest": 20
+				},
+				{
+					"label": "Footwear",
+					"Priced Highest": 39,
+					"Equally Priced": 25,
+					"Priced Lowest": 22
+				}
+
+			],
+			"graphs": [
+				{
+					"valueField": "Priced Highest",
+					"type": "column",
+					"fillAlphas": 0.6,
+					"title": "Priced Highest",
+					"balloonText":"[[title]]:[[value]]"
+				},
+				{
+					"valueField": "Equally Priced",
+					"type": "column",
+					"fillAlphas": 0.6,
+					"title": "Equally Priced",
+					"balloonText":"[[title]]:[[value]]"
+				},
+				{
+					"valueField": "Priced Lowest",
+					"type": "column",
+					"fillAlphas": 0.6,
+					"title": "Priced Lowest",
+					"balloonText":"[[title]]:[[value]]"
+				}
+			],
+			"categoryField": "label",
+			"rotate": true,
+			"valueAxes": [{
+				"stackType": "regular",
+		        "axisAlpha": 0.2,
+		        "gridAlpha": 0
+			}],
+			"categoryAxis": {
+	            "gridPosition": "start",
+	            "axisAlpha": 0.2,
+	            "gridAlpha": 0,
+	            "position": "left"
+	        },
+	        "balloon": {
+			    "cornerRadius": 3,
+			    "borderThickness": 1,
+			    // "adjustBorderColor" : true,
+			    // "borderColor" : "#ccc",
+			    "color" : "#666",
+			    "fillColor": "#fdfdfd",
+			    "fillAlpha": 0.9,
+			    "shadowAlpha" : 0.2,
+			    "verticalPadding": 8
+	  		},
+			"legend": {
+			     // "equalWidths": false,
+			     // "periodValueText": "[[value]]",
+			     "position": "right",
+			     "valueAlign": "left",
+			     "markerSize": 10,
+			  	// "useGraphSettings": true,
+			     "valueWidth": 1
+	  		},
+	    	"export": {
+	    		"enabled": true
+	  		},
+	  		// "fontSize": 10,
+	  		"startDuration": 0.6, //animation effect
+	  		"columnWidth": 0.5 //width of bar
+			
+
+
+		});
+	</script>
+
+</body>
+</html>
